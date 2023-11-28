@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class PolicyFIFOButFiveAndUnderFirst extends Policy{
-    public void schedule(Customer[] customers) {
+public class PolicyFIFOButFiveAndUnderFirst implements Policy{
+    public PriorityQueue<Customer> schedule(Customer[] customers) {
         PriorityQueue<Customer> queue = new PriorityQueue<>(new FiveAndUnderFirst());
 
         queue.addAll(Arrays.asList(customers));
 
         System.out.println("FIFOButFiveAndUnderFirst 처리 방식: ");
 
-        this.result(queue);
+        return queue;
     }
 }
 

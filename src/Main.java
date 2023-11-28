@@ -1,12 +1,10 @@
 import policy.*;
 
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         Customer[] customers = {
                 new Customer("이영주", 0, 1),
                 new Customer("이종찬", 2, 12),
@@ -16,6 +14,12 @@ public class Main {
                 new Customer("손민우", 9, 1),
                 new Customer("송예진", 10, 3)
         };
+
+        runProgram(customers);
+    }
+
+    private static void runProgram(Customer[] customers) {
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("먼저 온 고객을 먼저 서비스 하려면 F, 수리시간이 짧은 고객을 먼저 서비스 하려면 S, 선착순으로 하되 수리시간이 5분이하인 손님들을 먼저 서비스 하고 수리시간이 5분초과인 손님들을 나중에 서비스 하려면 B를 입력하세요.");
@@ -40,9 +44,30 @@ public class Main {
                 }
             }
 
-            policy.schedule(customers);
+            serviceResult(policy.schedule(customers));
         }
 
         scanner.close();
+    }
+
+    private static void serviceResult(PriorityQueue<Customer> queue) {
+        int currentTime = 0;
+        int totalWaitingTime = 0;
+
+        while (!queue.isEmpty()) {
+            Customer customer = queue.poll();
+            int startTime = Math.max(currentTime, customer.arrivalTime());
+            int endTime = startTime + customer.repairingTime();
+            int waitingTime = startTime - customer.arrivalTime();
+            totalWaitingTime += waitingTime;
+
+            System.out.println(customer.name() + ", 도착 시간: " + customer.arrivalTime() + "분, 소요시간: " + customer.repairingTime() + "분, 서비스 시작 시간: " + startTime +
+                    "분, 기다린 시간: " + waitingTime + "분");
+
+            currentTime = endTime;
+        }
+
+        System.out.println("총 기다린 시간: " + totalWaitingTime + "분");
+        System.out.println();
     }
 }
