@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class PolicyFIFOButFiveAndUnderFirst implements Policy{
+public class FIFOButFiveAndUnderFirstPolicy implements Policy{
     public PriorityQueue<Customer> schedule(Customer[] customers) {
-        PriorityQueue<Customer> queue = new PriorityQueue<>(new FiveAndUnderFirst());
+        PriorityQueue<Customer> queue = new PriorityQueue<>(new FiveAndUnderFirstComparator());
 
         queue.addAll(Arrays.asList(customers));
 
@@ -16,7 +16,7 @@ public class PolicyFIFOButFiveAndUnderFirst implements Policy{
     }
 }
 
-class FiveAndUnderFirst implements Comparator<Customer> {
+class FiveAndUnderFirstComparator implements Comparator<Customer> {
     static int CRITERION = 5;
 
     @Override

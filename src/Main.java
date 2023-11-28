@@ -34,9 +34,9 @@ public class Main {
 
             Policy policy;
             switch (userInput) {
-                case "F" -> policy = new PolicyFIFO();
-                case "S" -> policy = new PolicySJF();
-                case "B" -> policy = new PolicyFIFOButFiveAndUnderFirst();
+                case "F" -> policy = new FIFOPolicy();
+                case "S" -> policy = new SJFPolicy();
+                case "B" -> policy = new FIFOButFiveAndUnderFirstPolicy();
                 default -> {
                     System.out.println("올바른 입력이 아닙니다. 다시 입력하세요.");
                     System.out.println();
